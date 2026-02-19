@@ -106,6 +106,7 @@ a {
     display: flex;
     flex-direction: column;
     align-items: stretch;
+    gap: 1em;
 }
 
 .app-header {
@@ -133,10 +134,33 @@ a {
 #bookshelf {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(250px, 10vw));
+    gap: 2em;
 }
 
 .book-item {
+    padding: 1.5em;
+    border-radius: 8px;
+    box-shadow: 0.25em 0.25em 0.1em 0 #bbb;
+}
 
+.book-title {
+    font-weight: 700;
+    font-size: 1em;
+}
+
+.book-author {
+    font-weight: 500;
+    color: #777;
+    font-size: 0.5em;
+}
+
+.book-status {
+    background-color: rgb(231, 127, 1);
+    color: #fff;
+    padding: 0.25em;
+    border-radius: 0.5em;
+    font-weight: 700;
+    font-size: 0.5em;
 }
 
 .username {

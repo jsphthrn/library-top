@@ -4,6 +4,9 @@ function Book(title, author, pages, isRead, id) {
     this.pages = pages;
     this.isRead = isRead;
     this.id = id;
+    this.changeStatus = function () {
+        this.isRead = !this.isRead;
+    }
 
 }
 
@@ -40,6 +43,19 @@ function deployLibrary () {
             itemStatus.textContent = "Not read";
         }
 
+        itemStatus.addEventListener("click", () => {    // toggle status function
+
+            const aux = myLibrary.findIndex(item => item.id = itemStatus.parentElement.getAttribute("id"));
+            myLibrary[aux].isRead = !myLibrary[aux].isRead;     // toggle for data
+
+            if (myLibrary[aux].isRead) {                        // toggle for book display
+                itemStatus.textContent = "Read";           
+            } else {
+                itemStatus.textContent = "Not read";
+            }
+
+        })
+
         newItem.appendChild(itemTitle);
         newItem.appendChild(itemAuthor);
         newItem.appendChild(itemPages);
@@ -54,4 +70,6 @@ const myLibrary = [];
 
 const bookshelf = document.getElementById("bookshelf");
 
-
+addBookToLibrary("Foundation", "Isaac Asimov", 389, true);
+addBookToLibrary("Foundation and Empire", "Isaac Asimov", 402, true);
+deployLibrary();
