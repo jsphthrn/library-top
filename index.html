@@ -24,10 +24,10 @@
         </div>
         <div class="sidebar">
             <ul class="actions">
-                <a href="#"><li class="action-button">Add book</li></a>
-                <a href="#"><li class="action-button">Edit book</li></a>
-                <a href="#"><li class="action-button">Remove book</li></a>
-                <a href="#"><li class="action-button">See book details</li></a>
+                <a href="#" id="add-book"><li class="action-button">Add book</li></a>
+                <a href="#" id="edit-book"><li class="action-button">Edit book</li></a>
+                <a href="#" id="remove-book"><li class="action-button">Remove book</li></a>
+                <a href="#" id="see-details"><li class="action-button">See book details</li></a>
             </ul>   
         </div>
         <div class="app-content">
@@ -42,6 +42,23 @@
                 
             </div>
         </div>
+        <dialog id="panel-add" class="panel">
+            <div class="panel-title">Add new book</div>
+            <label for="title" class="panel-label">Book title</label>
+            <input name="title" id="input-title" class="panel-input" required placeholder="Write book title">
+            <label for="author" class="panel-label">Author</label>
+            <input name="author" id="input-author" class="panel-input" required placeholder="John Doe">
+            <label for="pages" class="panel-label">No. of pages</label>
+            <input name="pages" id="input-pages" class="panel-input" type="number" required>
+            <div class="input-container-horizontal">
+                <label for="status" class="panel-label">I've read this book</label>
+                <input type="checkbox" name="status" id="input-status">
+            </div>
+            <div class="panel-bottom">
+                <div class="panel-button" id="add-submit">Submit</div>
+                <div class="panel-button" id="panel-cancel">Exit</div>
+            </div>
+        </dialog>
         <div class="footer">
             <div class="head-logo">
                 <img src="./assets/company-logo-generic.svg" class="company-logo">

@@ -1,4 +1,4 @@
-function Book(title, author, pages, isRead, id) {
+function Book(title, author, pages, isRead, id) { // constructor for books
     this.title = title;
     this.author = author;
     this.pages = pages;
@@ -10,12 +10,13 @@ function Book(title, author, pages, isRead, id) {
 
 }
 
-function addBookToLibrary (title, author, pages, isRead) {
+function addBookToLibrary (title, author, pages, isRead) { // self-explanatory
     const book = new Book(title, author, pages, isRead, crypto.randomUUID());
     myLibrary.push(book);
+    deployLibrary();
 }
 
-function deployLibrary () {
+function deployLibrary () { // display books in 'bookshelf'
     bookshelf.innerHTML = null;
     for (let i = 0; i < myLibrary.length; i++) {
 
@@ -66,9 +67,43 @@ function deployLibrary () {
     }
 }
 
-const myLibrary = [];
+// internal code
 
-const bookshelf = document.getElementById("bookshelf");
+const myLibrary = []; 
+
+// html elements
+
+const bookshelf = document.getElementById("bookshelf"); // book container in page
+
+const emergentAdd = document.getElementById("panel-add");
+emergentAdd.close();
+
+const addPanel = document.getElementById("add-book");
+addPanel.addEventListener("click", () => {
+    emergentAdd.showModal();
+})
+
+const addSubmit = document.getElementById("add-submit"); 
+addSubmit.addEventListener("click", () => {
+    const bookTitle = document.getElementById("input-title").value;
+    const bookAuthor = document.getElementById("input-author").value;
+    const bookPages = document.getElementById("input-pages").value;
+    const bookStatus = document.getElementById("input-status").checked;
+    addBookToLibrary(bookTitle, bookAuthor, bookPages, bookStatus);
+    document.getElementById("input-title").value = "";
+    document.getElementById("input-author").value = "";
+    document.getElementById("input-pages").value = "";
+    document.getElementById("input-status").checked = false;
+    emergentAdd.close();
+});
+
+const exitPanel = document.getElementById("panel-cancel");
+exitPanel.addEventListener("click", () => {
+    emergentAdd.close();
+})
+
+
+// below code is for testing purposes. Code will be commented later.
 
 addBookToLibrary("Foundation", "Isaac Asimov", 389, true);
 addBookToLibrary("Foundation and Empire", "Isaac Asimov", 402, true);
