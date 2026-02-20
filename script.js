@@ -61,9 +61,23 @@ function deployLibrary () { // display books in 'bookshelf'
         newItem.appendChild(itemAuthor);
         newItem.appendChild(itemPages);
         newItem.appendChild(itemStatus);
+        newItem.setAttribute("selected", false);
+
+        newItem.addEventListener("click", () => {
+            deselectBook();
+            selectedBookId = newItem.getAttribute("id");
+            document.getElementById(selectedBookId).setAttribute("selected", true);
+        })
 
         bookshelf.appendChild(newItem);
 
+    }
+}
+
+function deselectBook () {
+    if (selectedBookId) {
+        document.getElementById(selectedBookId).setAttribute("selected", false);
+        selectedBookId = null;
     }
 }
 
@@ -80,6 +94,7 @@ emergentAdd.close();
 
 const addPanel = document.getElementById("add-book");
 addPanel.addEventListener("click", () => {
+    deselectBook();
     emergentAdd.showModal();
 })
 
@@ -101,6 +116,12 @@ const exitPanel = document.getElementById("panel-cancel");
 exitPanel.addEventListener("click", () => {
     emergentAdd.close();
 })
+
+let selectedBookId;
+
+
+
+
 
 
 // below code is for testing purposes. Code will be commented later.

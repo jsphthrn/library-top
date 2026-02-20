@@ -306,3 +306,7 @@ a {
 .copyright {
     color: #fff
 }
+
+[selected = true] {
+    border-style: solid;
+}
