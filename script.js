@@ -173,7 +173,6 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
-// below code is for testing purposes. Code will be commented later.
 
 /*
 addBookToLibrary("Foundation", "Isaac Asimov", 389, true);
