@@ -15,7 +15,7 @@ function addBookToLibrary (title, author, pages, isRead) { // self-explanatory
     myLibrary.push(book);
     deployLibrary();
 }
-
+/*
 function deployLibrary () { // display books in 'bookshelf'
     bookshelf.innerHTML = null;
     for (let i = 0; i < myLibrary.length; i++) {
@@ -70,6 +70,8 @@ function deployLibrary () { // display books in 'bookshelf'
 
         })
 
+        
+
         newItem.appendChild(itemTitle);
         newItem.appendChild(itemAuthor);
         newItem.appendChild(itemDeleteButton);
@@ -87,6 +89,9 @@ function deployLibrary () { // display books in 'bookshelf'
 
     }
 }
+    
+*/
+
 
 function deselectBook () {
     if (selectedBookId) {
