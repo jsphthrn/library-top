@@ -32,6 +32,19 @@ function deployLibrary () { // display books in 'bookshelf'
         itemAuthor.setAttribute("class", 'book-author');
         itemAuthor.textContent = "by " + myLibrary[i].author;
 
+        const itemDeleteButton = document.createElement('img');
+        itemDeleteButton.setAttribute("class", "delete-book-button");
+        itemDeleteButton.setAttribute("src", "./assets/trash-can-outline-inactive.svg");
+        itemDeleteButton.addEventListener("click", () => {
+            emergentRemove.showModal();
+        });
+        itemDeleteButton.addEventListener("mouseenter", () => {
+            itemDeleteButton.setAttribute("src", "./assets/trash-can-outline-active.svg");
+        });
+         itemDeleteButton.addEventListener("mouseleave", () => {
+            itemDeleteButton.setAttribute("src", "./assets/trash-can-outline-inactive.svg");
+        });
+
         const itemPages = document.createElement('div');
         itemPages.setAttribute("class", 'book-pages');
         itemPages.textContent = myLibrary[i].pages + " pages";
@@ -59,6 +72,7 @@ function deployLibrary () { // display books in 'bookshelf'
 
         newItem.appendChild(itemTitle);
         newItem.appendChild(itemAuthor);
+        newItem.appendChild(itemDeleteButton);
         newItem.appendChild(itemPages);
         newItem.appendChild(itemStatus);
         newItem.setAttribute("selected", false);
@@ -157,13 +171,12 @@ document.addEventListener("keydown", (event) => {
     if (event.key === 'Escape') {
         deselectBook();
     }
-})
-
-
-
+});
 
 // below code is for testing purposes. Code will be commented later.
 
+/*
 addBookToLibrary("Foundation", "Isaac Asimov", 389, true);
 addBookToLibrary("Foundation and Empire", "Isaac Asimov", 402, true);
 deployLibrary();
+*/

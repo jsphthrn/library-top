@@ -177,6 +177,14 @@ a {
     align-self: center;
 }
 
+.delete-book-button {
+    height: 2em;;
+    grid-column: 4 / 5;
+    grid-row: 1 / 2;
+    align-self: center;
+    justify-self: center;
+}
+
 .book-pages {
     font-size: 0.5em;
     grid-column: 1 / 3;
