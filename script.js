@@ -81,13 +81,26 @@ function deselectBook () {
     }
 }
 
+function removeBook(bookId) {
+    for (let i = 0; i < myLibrary.length; i++) {
+        if (myLibrary[i].id === bookId) {
+            myLibrary.splice(i, 1);
+            deployLibrary();
+            break;
+        } /* else {
+            console.log("Index " + i + " is not selected book."); 
+        } */
+    }
+}
+
 // internal code
 
 const myLibrary = []; 
+let selectedBookId;
 
 // html elements
 
-const bookshelf = document.getElementById("bookshelf"); // book container in page
+const container = document.getElementsByClassName("app-content");
 
 const emergentAdd = document.getElementById("panel-add");
 emergentAdd.close();
@@ -112,14 +125,39 @@ addSubmit.addEventListener("click", () => {
     emergentAdd.close();
 });
 
-const exitPanel = document.getElementById("panel-cancel");
+const emergentRemove = document.getElementById("remove-warning");
+
+const removePanel = document.getElementById("remove-book");
+removePanel.addEventListener("click", () => {
+    if (selectedBookId) {
+        emergentRemove.showModal();
+    } else {
+        alert("Please select a book first.");
+    }
+});
+
+const removeSubmit = document.getElementById("remove-submit");
+removeSubmit.addEventListener("click", () => {
+    removeBook(selectedBookId);
+    selectedBookId = null;
+    emergentRemove.close();
+});
+
+const exitPanel = document.getElementById("panel-exit");
 exitPanel.addEventListener("click", () => {
     emergentAdd.close();
+});
+
+const cancelPanel = document.getElementById("panel-cancel");
+cancelPanel.addEventListener("click", () => {
+    emergentRemove.close();
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === 'Escape') {
+        deselectBook();
+    }
 })
-
-let selectedBookId;
-
-
 
 
 
