@@ -68,9 +68,7 @@ function deployLibrary () { // display books in 'bookshelf'
                 itemStatus.textContent = "Not read";
             }
 
-        })
-
-        
+        });
 
         newItem.appendChild(itemTitle);
         newItem.appendChild(itemAuthor);
