@@ -1,3 +1,5 @@
+/* will refactor with class syntax
+
 function Book(title, author, pages, isRead, id) { // constructor for books
     this.title = title;
     this.author = author;
@@ -10,11 +12,97 @@ function Book(title, author, pages, isRead, id) { // constructor for books
 
 }
 
+*/
+
+class Book {
+
+    constructor (title, author, pages, isRead) {
+
+        this.title = title;
+        this.author = author;
+        this.pages = pages;
+        this.isRead = isRead;
+        this.id = id();
+
+    }
+
+    get id () {
+
+        return this.id;
+
+    }
+
+    set id (bookId = crypto.randomUUID() ) {
+
+        if (this.id === null) {
+
+            this.id = bookId;
+
+        } else {
+
+            console.log("Cannot change book ID!");
+
+        }
+
+    }
+
+}
+
+class Library {
+
+    constructor (books) {
+
+        this.books = books;
+
+    }
+
+    get books () {
+
+        return this.books;
+
+    }
+
+    addBook (newBook) {
+
+        this.books.push(newBook);
+
+    }
+
+    removeBook (id) {
+
+        let libSize = this.books.length;
+
+        for (let i = 0; i < this.books.length ; i++) {
+
+            if (this.books[i].id === id) {
+
+                this.books.splice(i, 1);
+                break;
+
+            }
+        }
+
+        if (libSize === this.books.length) {
+
+            alert("Book not found!");
+        }
+
+        return;
+
+    }
+}
+
+
+
+/*
+
 function addBookToLibrary (title, author, pages, isRead) { // self-explanatory
     const book = new Book(title, author, pages, isRead, crypto.randomUUID());
     myLibrary.push(book);
     deployLibrary();
 }
+
+*/
 
 function deployLibrary () { // display books in 'bookshelf'
     bookshelf.innerHTML = null;
@@ -95,17 +183,21 @@ function deselectBook () {
     }
 }
 
+
+/*
 function removeBook(bookId) {
     for (let i = 0; i < myLibrary.length; i++) {
         if (myLibrary[i].id === bookId) {
             myLibrary.splice(i, 1);
             deployLibrary();
             break;
-        } /* else {
+        } else {
             console.log("Index " + i + " is not selected book."); 
-        } */
+        }
     }
 }
+
+*/
 
 // internal code
 
