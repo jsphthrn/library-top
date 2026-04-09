@@ -22,21 +22,23 @@ class Book {
         this.author = author;
         this.pages = pages;
         this.isRead = isRead;
-        this.id = id();
+        this._id = crypto.randomUUID();
 
     }
 
     get id () {
 
-        return this.id;
+        return this._id;
 
     }
 
-    set id (bookId = crypto.randomUUID() ) {
+    /*
 
-        if (this.id === null) {
+    set id (idNo) {
 
-            this.id = bookId;
+        if (this._id === null) {
+
+            this._id = idNo;
 
         } else {
 
@@ -46,55 +48,83 @@ class Book {
 
     }
 
+    */
+
 }
 
 class Library {
 
     constructor (books) {
 
-        this.books = books;
+        this._books = books;
 
     }
 
     get books () {
 
-        return this.books;
+        return this._books;
 
     }
 
-    addBook (newBook) {
+    set books (input) {  
 
-        this.books.push(newBook);
-
+        this._books = input;
+        
     }
 
-    removeBook (id) {
+    addBook = (book) => {
+        
+        let aux = this._books;
+        console.log(typeof aux);
+        aux.push(book);
+        this._books = aux;
+        deployLibrary();
+    
+    };
 
-        let libSize = this.books.length;
+    removeBook = (id) => {
+    
+        let aux = this._books;
+        for (let i = 0; i < aux.length; i++) {
 
-        for (let i = 0; i < this.books.length ; i++) {
+            if (id === aux[i].id) {
 
-            if (this.books[i].id === id) {
-
-                this.books.splice(i, 1);
+                aux.splice(i,1);
+                myLibrary._books = aux; 
+                deployLibrary();
                 break;
-
             }
-        }
 
-        if (libSize === this.books.length) {
-
-            alert("Book not found!");
-        }
-
-        return;
+        };
 
     }
+
 }
 
+/* function addBook (book) {
+    
+    let aux = myLibrary.books;
+    aux.push(book);
+    myLibrary.books = aux;
 
+}
 
-/*
+function removeBook (idToRemove) {
+
+    let aux = myLibrary.books;
+    for (let i = 0; i < aux.length; i++) {
+
+        if (idToRemove === aux[i]) {
+            
+            aux.splice(i, 1);
+            myLibrary.books = aux;
+            return;
+
+        }
+
+    }
+
+}
 
 function addBookToLibrary (title, author, pages, isRead) { // self-explanatory
     const book = new Book(title, author, pages, isRead, crypto.randomUUID());
@@ -106,19 +136,20 @@ function addBookToLibrary (title, author, pages, isRead) { // self-explanatory
 
 function deployLibrary () { // display books in 'bookshelf'
     bookshelf.innerHTML = null;
-    for (let i = 0; i < myLibrary.length; i++) {
+    let aux = myLibrary.books;
+    for (let i = 0; i < aux.length; i++) {
 
         const newItem = document.createElement("div");
         newItem.setAttribute("class", "book-item");
-        newItem.setAttribute("id", myLibrary[i].id);
+        newItem.setAttribute("id", aux[i].id);
 
         const itemTitle = document.createElement('div');
         itemTitle.setAttribute("class", 'book-title');
-        itemTitle.textContent = myLibrary[i].title;
+        itemTitle.textContent = aux[i].title;
 
         const itemAuthor = document.createElement('div');
         itemAuthor.setAttribute("class", 'book-author');
-        itemAuthor.textContent = "by " + myLibrary[i].author;
+        itemAuthor.textContent = "by " + aux[i].author;
 
         const itemDeleteButton = document.createElement('img');
         itemDeleteButton.setAttribute("class", "delete-book-button");
@@ -135,11 +166,11 @@ function deployLibrary () { // display books in 'bookshelf'
 
         const itemPages = document.createElement('div');
         itemPages.setAttribute("class", 'book-pages');
-        itemPages.textContent = myLibrary[i].pages + " pages";
+        itemPages.textContent = aux[i].pages + " pages";
 
         const itemStatus = document.createElement('div');
         itemStatus.setAttribute("class", 'book-status');
-        if (myLibrary[i].isRead) {
+        if (aux[i].isRead) {
             itemStatus.textContent = "Read";           
         } else {
             itemStatus.textContent = "Not read";
@@ -147,10 +178,10 @@ function deployLibrary () { // display books in 'bookshelf'
 
         itemStatus.addEventListener("click", () => {    // toggle status function
 
-            const aux = myLibrary.findIndex(item => item.id = itemStatus.parentElement.getAttribute("id"));
-            myLibrary[aux].isRead = !myLibrary[aux].isRead;     // toggle for data
+            const helper = aux.findIndex(item => item.id = itemStatus.parentElement.getAttribute("id"));
+            aux[helper].isRead = !aux[helper].isRead;     // toggle for data
 
-            if (myLibrary[aux].isRead) {                        // toggle for book display
+            if (aux[helper].isRead) {                        // toggle for book display
                 itemStatus.textContent = "Read";           
             } else {
                 itemStatus.textContent = "Not read";
@@ -201,7 +232,7 @@ function removeBook(bookId) {
 
 // internal code
 
-const myLibrary = []; 
+const myLibrary = new Library ([]); 
 let selectedBookId;
 
 // html elements
@@ -223,7 +254,9 @@ addSubmit.addEventListener("click", () => {
     const bookAuthor = document.getElementById("input-author").value;
     const bookPages = document.getElementById("input-pages").value;
     const bookStatus = document.getElementById("input-status").checked;
-    addBookToLibrary(bookTitle, bookAuthor, bookPages, bookStatus);
+    const createdbook = new Book (bookTitle, bookAuthor, bookPages, bookStatus);
+    myLibrary.addBook(createdbook);
+    deployLibrary();
     document.getElementById("input-title").value = "";
     document.getElementById("input-author").value = "";
     document.getElementById("input-pages").value = "";
@@ -244,7 +277,7 @@ removePanel.addEventListener("click", () => {
 
 const removeSubmit = document.getElementById("remove-submit");
 removeSubmit.addEventListener("click", () => {
-    removeBook(selectedBookId);
+    myLibrary.removeBook(selectedBookId);
     selectedBookId = null;
     emergentRemove.close();
 });
@@ -265,9 +298,6 @@ document.addEventListener("keydown", (event) => {
     }
 });
 
-
-/*
-addBookToLibrary("Foundation", "Isaac Asimov", 389, true);
-addBookToLibrary("Foundation and Empire", "Isaac Asimov", 402, true);
+myLibrary.addBook(new Book("Foundation", "Isaac Asimov", 389, true));
+myLibrary.addBook(new Book("Foundation and Empire", "Isaac Asimov", 402, true));
 deployLibrary();
-*/
